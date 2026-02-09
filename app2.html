@@ -9,17 +9,17 @@
     @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap");
 
     :root {
-      --ink: #f7f0e7;
-      --coal: #d6c8b8;
-      --cream: #12100e;
-      --gold: #d4a04f;
-      --olive: #a89786;
-      --rose: #c48774;
-      --mist: #1b1713;
-      --accent: #2f6b58;
-      --glass: rgba(18, 16, 14, 0.7);
-      --shadow: 0 34px 80px rgba(0, 0, 0, 0.45);
-      --soft-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      --ink: #e8efeb;
+      --coal: #b9c7bf;
+      --cream: #101513;
+      --gold: #2f8f68;
+      --olive: #8ea49a;
+      --rose: #6e847b;
+      --mist: #18201d;
+      --accent: #3fa779;
+      --glass: rgba(23, 30, 27, 0.78);
+      --shadow: 0 28px 68px rgba(0, 0, 0, 0.35);
+      --soft-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
     }
 
     * {
@@ -30,8 +30,8 @@
       margin: 0;
       font-family: "Manrope", system-ui, -apple-system, sans-serif;
       color: var(--ink);
-      background: radial-gradient(circle at top, rgba(212, 160, 79, 0.18), transparent 55%),
-        linear-gradient(135deg, #0d0b09 0%, #15110e 55%, #1a1612 100%);
+      background: radial-gradient(circle at top, rgba(63, 167, 121, 0.18), transparent 55%),
+        linear-gradient(135deg, #0f1312 0%, #171d1b 55%, #1d2622 100%);
       min-height: 100vh;
     }
 
@@ -55,7 +55,7 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 60%),
-        radial-gradient(circle at 70% 10%, rgba(212, 160, 79, 0.2), transparent 40%);
+        radial-gradient(circle at 70% 10%, rgba(63, 167, 121, 0.2), transparent 40%);
       pointer-events: none;
       z-index: 0;
     }
@@ -65,7 +65,7 @@
       inset: -20% auto auto -10%;
       width: 520px;
       height: 520px;
-      background: radial-gradient(circle, rgba(212, 160, 79, 0.28), transparent 70%);
+      background: radial-gradient(circle, rgba(63, 167, 121, 0.24), transparent 70%);
       filter: blur(5px);
       pointer-events: none;
       z-index: 0;
@@ -75,7 +75,7 @@
       inset: 30% -10% auto auto;
       width: 420px;
       height: 420px;
-      background: radial-gradient(circle, rgba(196, 135, 116, 0.22), transparent 70%);
+      background: radial-gradient(circle, rgba(142, 164, 154, 0.22), transparent 70%);
     }
 
     header {
@@ -83,8 +83,8 @@
       top: 0;
       z-index: 10;
       backdrop-filter: blur(18px);
-      background: rgba(16, 13, 11, 0.75);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(16, 21, 19, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .nav {
@@ -112,7 +112,7 @@
     }
 
     .nav-links a {
-      color: rgba(247, 240, 231, 0.9);
+      color: rgba(232, 239, 235, 0.92);
     }
 
     .nav-links a {
@@ -138,7 +138,7 @@
 
     .btn {
       border: none;
-      background: linear-gradient(120deg, #d4a04f, #a76f2b);
+      background: linear-gradient(120deg, #3fa779, #2f8f68);
       color: #fff;
       padding: 12px 20px;
       border-radius: 999px;
@@ -154,12 +154,12 @@
       padding: 14px 26px;
       font-size: 0.95rem;
       box-shadow: 0 18px 38px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(212, 160, 79, 0.5);
+      border: 1px solid rgba(63, 167, 121, 0.45);
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 18px 34px rgba(27, 21, 16, 0.3);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
       filter: brightness(1.05);
     }
 
@@ -196,11 +196,11 @@
     }
 
     .hero-card {
-      background: rgba(20, 17, 14, 0.72);
+      background: rgba(23, 30, 27, 0.9);
       padding: 18px;
       border-radius: 24px;
       box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .hero-media {
@@ -208,7 +208,7 @@
       border-radius: 30px;
       overflow: hidden;
       box-shadow: var(--shadow);
-      border: 1px solid rgba(27, 21, 16, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .hero-media img {
@@ -221,12 +221,38 @@
       position: absolute;
       bottom: 18px;
       left: 18px;
-      background: rgba(10, 8, 6, 0.8);
+      background: rgba(47, 143, 104, 0.9);
       color: #fff;
       padding: 12px 16px;
       border-radius: 999px;
       font-size: 0.85rem;
       letter-spacing: 0.08em;
+    }
+
+    .trust-strip {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .trust-card {
+      background: rgba(23, 30, 27, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: var(--soft-shadow);
+      display: grid;
+      gap: 6px;
+    }
+
+    .trust-card strong {
+      font-size: 1.2rem;
+      color: #7ed0a9;
     }
 
     section {
@@ -263,13 +289,13 @@
     }
 
     .signature-card {
-      background: rgba(20, 16, 13, 0.86);
+      background: rgba(23, 30, 27, 0.9);
       border-radius: 22px;
       padding: 20px;
       box-shadow: var(--soft-shadow);
       display: grid;
       gap: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -297,8 +323,8 @@
 
     .menu-tab {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      color: rgba(247, 240, 231, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: rgba(232, 239, 235, 0.92);
       padding: 11px 20px;
       border-radius: 999px;
       cursor: pointer;
@@ -307,7 +333,7 @@
     }
 
     .menu-tab.active {
-      background: linear-gradient(120deg, #d4a04f, #a76f2b);
+      background: linear-gradient(120deg, #3fa779, #2f8f68);
       color: #fff;
       border-color: transparent;
       box-shadow: 0 10px 24px rgba(27, 21, 16, 0.24);
@@ -320,12 +346,12 @@
     }
 
     .menu-item {
-      background: rgba(20, 16, 13, 0.86);
+      background: rgba(23, 30, 27, 0.9);
       border-radius: 16px;
       padding: 18px;
       display: grid;
       gap: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .menu-item span {
@@ -339,12 +365,12 @@
     }
 
     .experience-card {
-      background: rgba(20, 16, 13, 0.86);
+      background: rgba(23, 30, 27, 0.9);
       border-radius: 22px;
       padding: 22px;
       display: grid;
       gap: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: var(--soft-shadow);
     }
 
@@ -365,7 +391,7 @@
       overflow: hidden;
       cursor: pointer;
       box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .gallery-item img {
@@ -383,7 +409,7 @@
       position: absolute;
       bottom: 12px;
       left: 12px;
-      background: rgba(15, 12, 10, 0.75);
+      background: rgba(11, 22, 18, 0.82);
       color: #fff;
       padding: 6px 10px;
       border-radius: 999px;
@@ -426,7 +452,7 @@
 
     .ghost {
       border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(16, 13, 11, 0.7);
+      background: rgba(17, 23, 21, 0.75);
       color: var(--ink);
       padding: 10px 16px;
       border-radius: 999px;
@@ -435,17 +461,17 @@
     }
 
     .ghost:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(63, 167, 121, 0.14);
     }
 
     .reservation {
-      background: rgba(20, 16, 13, 0.78);
+      background: rgba(24, 32, 29, 0.9);
       border-radius: 28px;
       padding: 32px;
       display: grid;
       gap: 20px;
       box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .reservation form {
@@ -460,7 +486,7 @@
       padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(12, 10, 9, 0.82);
+      background: rgba(14, 20, 18, 0.86);
       color: var(--ink);
       font-family: inherit;
     }
@@ -469,8 +495,8 @@
     .reservation select:focus,
     .reservation textarea:focus {
       outline: none;
-      border-color: rgba(200, 154, 74, 0.6);
-      box-shadow: 0 0 0 3px rgba(200, 154, 74, 0.15);
+      border-color: rgba(63, 167, 121, 0.6);
+      box-shadow: 0 0 0 3px rgba(63, 167, 121, 0.18);
     }
 
     .contact-status {
@@ -478,8 +504,8 @@
       padding: 12px 14px;
       font-size: 0.92rem;
       display: none;
-      background: rgba(212, 160, 79, 0.18);
-      border: 1px solid rgba(212, 160, 79, 0.4);
+      background: rgba(63, 167, 121, 0.14);
+      border: 1px solid rgba(63, 167, 121, 0.35);
       color: var(--ink);
     }
 
@@ -488,20 +514,20 @@
     }
 
     .contact-status.error {
-      background: rgba(196, 135, 116, 0.2);
-      border-color: rgba(196, 135, 116, 0.45);
+      background: rgba(196, 76, 76, 0.14);
+      border-color: rgba(196, 76, 76, 0.35);
     }
 
     .footer {
       padding: 40px 24px 60px;
       text-align: center;
-      color: rgba(214, 200, 184, 0.8);
+      color: rgba(185, 199, 191, 0.9);
     }
 
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(15, 10, 6, 0.8);
+      background: rgba(8, 14, 12, 0.8);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -526,7 +552,7 @@
     .contact-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8, 6, 5, 0.65);
+      background: rgba(8, 14, 12, 0.55);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
@@ -544,7 +570,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(-10px);
       width: min(860px, 92vw);
-      background: rgba(18, 15, 13, 0.96);
+      background: rgba(17, 24, 21, 0.96);
       border-radius: 26px;
       box-shadow: 0 40px 90px rgba(20, 16, 12, 0.2);
       padding: 28px;
@@ -593,8 +619,8 @@
     }
 
     .contact-tab {
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(15, 12, 10, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(17, 23, 21, 0.75);
       color: var(--ink);
       padding: 10px 16px;
       border-radius: 999px;
@@ -605,7 +631,7 @@
     }
 
     .contact-tab.active {
-      background: linear-gradient(120deg, #d4a04f, #a76f2b);
+      background: linear-gradient(120deg, #3fa779, #2f8f68);
       color: #fff;
       border-color: transparent;
       box-shadow: 0 12px 26px rgba(20, 16, 12, 0.2);
@@ -615,7 +641,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 20px;
-      background: linear-gradient(160deg, rgba(20, 16, 13, 0.95), rgba(12, 10, 9, 0.9));
+      background: linear-gradient(160deg, rgba(22, 30, 27, 0.96), rgba(13, 19, 17, 0.92));
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
       display: grid;
       gap: 14px;
@@ -648,7 +674,7 @@
       padding: 11px 12px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(12, 10, 9, 0.82);
+      background: rgba(12, 18, 15, 0.9);
       color: var(--ink);
       font-family: inherit;
     }
@@ -657,8 +683,8 @@
     .contact-panel select:focus,
     .contact-panel textarea:focus {
       outline: none;
-      border-color: rgba(200, 154, 74, 0.6);
-      box-shadow: 0 0 0 3px rgba(200, 154, 74, 0.15);
+      border-color: rgba(63, 167, 121, 0.6);
+      box-shadow: 0 0 0 3px rgba(63, 167, 121, 0.18);
     }
 
     .contact-panel .btn {
@@ -713,6 +739,25 @@
           <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Digital banking dashboard" />
           <div class="hero-tag">Secure Digital · Concierge Support</div>
         </div>
+      </section>
+
+      <section class="trust-strip" aria-label="Trust metrics">
+        <article class="trust-card">
+          <strong>99.99%</strong>
+          <span>Digital platform uptime</span>
+        </article>
+        <article class="trust-card">
+          <strong>&lt; 2 min</strong>
+          <span>Average concierge response time</span>
+        </article>
+        <article class="trust-card">
+          <strong>24/7</strong>
+          <span>Fraud monitoring coverage</span>
+        </article>
+        <article class="trust-card">
+          <strong>256-bit</strong>
+          <span>End-to-end encryption standard</span>
+        </article>
       </section>
 
       <section id="story">
@@ -918,10 +963,10 @@
             <input type="tel" name="phone" placeholder="US phone number" inputmode="numeric" required />
             <select name="reason" required>
               <option value="" disabled selected>Reason for calling</option>
-              <option value="Chef tasting experience">Chef tasting experience</option>
-              <option value="Private dining inquiry">Private dining inquiry</option>
-              <option value="Wine pairing consultation">Wine pairing consultation</option>
-              <option value="Gift card request">Gift card request</option>
+              <option value="Open a new account">Open a new account</option>
+              <option value="Loan or mortgage support">Loan or mortgage support</option>
+              <option value="Card or fraud support">Card or fraud support</option>
+              <option value="Wealth advisory request">Wealth advisory request</option>
             </select>
             <textarea name="message" rows="3" placeholder="Message for our concierge"></textarea>
             <button class="btn" type="submit">Schedule Callback</button>
