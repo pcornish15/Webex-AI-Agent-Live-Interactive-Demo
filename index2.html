@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webex Bank Demo Guide</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+    :root {
+      --bg: #d3e8f7;
+      --panel: #e9f3ff;
+      --panel-soft: rgba(233, 243, 255, 0.92);
+      --line: rgba(12, 62, 98, 0.18);
+      --text: #0a355a;
+      --muted: rgba(10, 53, 90, 0.64);
+      --accent: #1f7bd1;
+      --accent-2: #2a9bd8;
+      --sidebar-width: 320px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      background: radial-gradient(circle at top, rgba(31, 123, 209, 0.22), transparent 55%),
+        linear-gradient(135deg, #d3e8f7 0%, #cbe3f6 55%, #c3def5 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: linear-gradient(160deg, #f2f7ff 0%, #deebfb 100%);
+      border-right: 1px solid var(--line);
+      padding: 26px 20px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 24px;
+      min-height: 0;
+    }
+
+    .side-content {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 24px;
+      min-height: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 600;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .nav {
+      display: grid;
+      gap: 10px;
+      max-height: 55vh;
+      overflow-y: auto;
+      padding-right: 6px;
+      min-height: 0;
+    }
+
+    .nav::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .nav::-webkit-scrollbar-thumb {
+      background: rgba(31, 123, 209, 0.35);
+      border-radius: 999px;
+    }
+
+    .nav button {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 22px 14px;
+      border-radius: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav button.active {
+      border-color: rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+    }
+
+    .nav button:hover {
+      border-color: rgba(31, 123, 209, 0.6);
+      transform: translateX(2px);
+    }
+
+    .notes {
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      min-height: 32vh;
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+      padding: 8px 36px 28px;
+    }
+
+    .topbar {
+      margin-top: 0;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 18px 16px 16px;
+      border-radius: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: none;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .env-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .env-buttons button {
+      border: 2px solid rgba(31, 123, 209, 0.7);
+      background: rgba(31, 123, 209, 0.18);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 10px 24px rgba(10, 53, 90, 0.2);
+    }
+
+    .env-buttons button.active {
+      background: linear-gradient(120deg, #1f7bd1, #2a9bd8);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 16px 34px rgba(10, 53, 90, 0.3);
+    }
+
+    .topbar strong {
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .topbar .pill {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--text);
+      background: rgba(31, 123, 209, 0.12);
+    }
+
+    .frame-wrap {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: #0a0b10;
+      box-shadow: 0 20px 60px rgba(10, 53, 90, 0.2);
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100vh - 130px);
+      border: none;
+      background: #111;
+    }
+
+    .instruction-panel {
+      display: none;
+    }
+
+    .instruction-panel.active {
+      display: block;
+    }
+
+    .instruction-panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+    }
+
+    .instruction-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .overview-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 50;
+      padding: 24px;
+    }
+
+    .overview-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overview-card {
+      width: min(900px, 94vw);
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 20px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      box-shadow: 0 20px 60px rgba(10, 53, 90, 0.25);
+      padding: 36px;
+      color: #0a355a;
+      display: grid;
+      gap: 18px;
+    }
+
+    .overview-card h2 {
+      margin: 0;
+      font-size: 1.7rem;
+    }
+
+    .overview-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(10, 53, 90, 0.78);
+      line-height: 1.6;
+    }
+
+    .overview-detail {
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      background: rgba(255, 255, 255, 0.85);
+      display: grid;
+      gap: 12px;
+    }
+
+    .overview-detail h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .overview-detail p {
+      margin: 0;
+      color: rgba(10, 53, 90, 0.75);
+      line-height: 1.6;
+    }
+
+    .overview-detail ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(10, 53, 90, 0.78);
+      line-height: 1.6;
+    }
+
+    .overview-card button {
+      justify-self: end;
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .interact-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 53;
+      padding: 24px;
+    }
+
+    .interact-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .interact-card {
+      width: min(900px, 94vw);
+      max-height: 90vh;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      box-shadow: 0 24px 70px rgba(10, 53, 90, 0.28);
+      padding: 28px;
+      color: #0a355a;
+      display: grid;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .interact-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .interact-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .interact-close {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .interact-section {
+      border: 1px solid rgba(12, 62, 98, 0.16);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(31, 123, 209, 0.06);
+      display: grid;
+      gap: 12px;
+    }
+
+    .interact-section h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .interact-qr {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .interact-qr img {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      border: 1px solid rgba(12, 62, 98, 0.12);
+      background: #fff;
+      object-fit: cover;
+    }
+
+    .interact-qr p {
+      margin: 0;
+      color: rgba(10, 53, 90, 0.75);
+      line-height: 1.6;
+    }
+
+    .persona-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 54;
+      padding: 24px;
+    }
+
+    .persona-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .persona-card {
+      width: min(1100px, 94vw);
+      max-height: 90vh;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      box-shadow: 0 24px 70px rgba(10, 53, 90, 0.28);
+      padding: 28px;
+      color: #0a355a;
+      display: grid;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .persona-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .persona-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .persona-close {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .persona-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .persona {
+      border: 1px solid rgba(12, 62, 98, 0.16);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(31, 123, 209, 0.06);
+      display: grid;
+      gap: 10px;
+    }
+
+    .persona img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid rgba(12, 62, 98, 0.12);
+      background: #2b2f3a;
+    }
+
+    .persona strong {
+      font-size: 1.05rem;
+    }
+
+    .persona ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(10, 53, 90, 0.78);
+      line-height: 1.5;
+    }
+
+    .knowledge-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 54;
+      padding: 24px;
+    }
+
+    .knowledge-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .knowledge-card {
+      width: min(1000px, 94vw);
+      max-height: 90vh;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      box-shadow: 0 24px 70px rgba(10, 53, 90, 0.28);
+      padding: 28px;
+      color: #0a355a;
+      display: grid;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .knowledge-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .knowledge-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .knowledge-close {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .knowledge-card-item {
+      border: 1px solid rgba(12, 62, 98, 0.16);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(31, 123, 209, 0.06);
+      display: grid;
+      gap: 10px;
+    }
+
+    .knowledge-card-item h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .knowledge-card-item ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(10, 53, 90, 0.78);
+      line-height: 1.5;
+    }
+
+    .menu-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .menu-section {
+      border: 1px solid rgba(12, 62, 98, 0.12);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-section h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .ai-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.68);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 55;
+      padding: 24px;
+    }
+
+    .ai-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ai-card {
+      width: min(1400px, 96vw);
+      max-height: 94vh;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      box-shadow: 0 24px 70px rgba(10, 53, 90, 0.28);
+      padding: 28px;
+      color: #0a355a;
+      display: grid;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .ai-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .ai-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .ai-close {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .ai-carousel {
+      position: relative;
+      display: grid;
+      gap: 14px;
+    }
+
+    .ai-slide {
+      display: none;
+      gap: 12px;
+    }
+
+    .ai-slide.active {
+      display: grid;
+    }
+
+    .ai-image-wrap {
+      max-height: 64vh;
+      overflow-y: auto;
+      border-radius: 16px;
+      border: 1px solid rgba(12, 62, 98, 0.12);
+      background: #fff;
+    }
+
+    .ai-image-wrap img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 16px;
+    }
+
+    .ai-image-wrap::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .ai-image-wrap::-webkit-scrollbar-thumb {
+      background: rgba(31, 123, 209, 0.35);
+      border-radius: 999px;
+    }
+
+    .ai-caption {
+      background: rgba(31, 123, 209, 0.08);
+      border: 1px solid rgba(31, 123, 209, 0.16);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: rgba(10, 53, 90, 0.8);
+    }
+
+    .ai-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ai-controls button {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .ai-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .ai-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(10, 53, 90, 0.2);
+    }
+
+    .ai-dots span.active {
+      background: rgba(31, 123, 209, 0.8);
+    }
+
+    .assist-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.68);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 55;
+      padding: 24px;
+    }
+
+    .assist-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .assist-card {
+      width: min(1400px, 96vw);
+      max-height: 94vh;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      box-shadow: 0 24px 70px rgba(10, 53, 90, 0.28);
+      padding: 28px;
+      color: #0a355a;
+      display: grid;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .assist-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .assist-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .assist-close {
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        grid-template-rows: auto auto auto;
+      }
+
+      iframe {
+        height: 70vh;
+      }
+
+      .overview-overlay {
+        left: 0;
+        width: 100%;
+      }
+
+      .ai-overlay {
+        left: 0;
+        width: 100%;
+      }
+
+      .interact-overlay {
+        left: 0;
+        width: 100%;
+      }
+
+      .persona-overlay {
+        left: 0;
+        width: 100%;
+      }
+
+      .knowledge-overlay {
+        left: 0;
+        width: 100%;
+      }
+
+      .assist-overlay {
+        left: 0;
+        width: 100%;
+      }
+
+      .ai-slide img {
+        height: 42vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/Webex.png" alt="Webex logo" />
+        Webex Bank Demo Experience<br />Live Interactive Demo
+      </div>
+      <div class="side-content">
+        <nav class="nav" aria-label="Demo navigation">
+          <button class="active" data-target="intro">Overview</button>
+          <button data-target="persona">Example Personas</button>
+          <button data-target="contact">Ways to Interact with AI Agent</button>
+          <button data-target="ai-config">AI Agent Configuration</button>
+          <button data-target="knowledge">Knowledge Base Configuration</button>
+          <button data-target="gallery">Agent Assist</button>
+        </nav>
+        <div class="notes" id="notes">
+          <div class="instruction-panel active" id="intro">
+            <h2>Demo Overview</h2>
+            <p>Use the framed site to show the dark, modern fine‑dining experience. Highlight the contact concierge CTA and the interactive menu tabs.</p>
+          </div>
+          <div class="instruction-panel" id="contact">
+            <h2>Ways to Interact with AI Agent</h2>
+            <p>Open the interaction modal to show voice and SMS AI entry points with QR codes.</p>
+          </div>
+          <div class="instruction-panel" id="ai-config">
+            <h2>AI Agent Configuration</h2>
+            <p>Open the AI configuration modal to walk through the six configuration visuals and talk through each step.</p>
+          </div>
+          <div class="instruction-panel" id="persona">
+            <h2>Example Personas</h2>
+            <p>Open the persona modal to showcase example guests and their interaction goals.</p>
+          </div>
+          <div class="instruction-panel" id="knowledge">
+            <h2>Knowledge Base Configuration</h2>
+            <p>Open the knowledge base modal to show typical banking data used by the AI agent.</p>
+          </div>
+          <div class="instruction-panel" id="gallery">
+            <h2>Agent Assist</h2>
+            <p>Explain AI‑powered assist features like live suggested responses, summaries, and next‑best actions.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="topbar">
+        <h1>Select Your Webex AI Interactive Demo Experience</h1>
+        <div class="env-buttons">
+          <button data-env="index.html">Restaurante Superba Demo Experience</button>
+          <button class="active" data-env="index2.html">Webex Bank Demo Experience</button>
+          <button data-env="index3.html">Webex Healthcare Demo Experience</button>
+        </div>
+      </div>
+      <div class="frame-wrap">
+        <iframe src="app2.html" title="Webex Bank site"></iframe>
+      </div>
+    </main>
+  </div>
+
+  <div class="overview-overlay open" id="overview-overlay" aria-hidden="false">
+    <div class="overview-card" role="dialog" aria-modal="true" aria-labelledby="overview-title">
+      <h2 id="overview-title">Live Demo Overview (Placeholder)</h2>
+      <p>This overlay contains placeholder guidance only. Replace with your official demo script and steps.</p>
+      <ul>
+        <li>SMS demo: Open Contact Concierge, choose the SMS tab, enter a name and a +1 or 10-digit number, then submit to trigger the webhook.</li>
+        <li>AI demo: Use the Callback tab to capture reason and message, then describe how AI can summarize the request and route it to the right team.</li>
+        <li>Optional: Switch menu tabs to show personalization and live UI responses.</li>
+      </ul>
+      <div class="overview-detail">
+        <h3>Placeholder Demo Instructions</h3>
+        <p>This is a placeholder script. Use it to narrate the experience while demonstrating the embedded banking site.</p>
+        <ul>
+          <li>Start by opening the Contact Concierge modal and explain that AI handles both voice and SMS entry points.</li>
+          <li>Show the SMS workflow and describe how the AI validates phone numbers and confirms the request.</li>
+          <li>Switch to the Callback flow and explain how the AI captures intent, summarizes details, and routes to the right team.</li>
+          <li>Open the AI Agent Configuration carousel and walk through each configuration screen.</li>
+          <li>Open Knowledge Base Configuration to highlight the types of data the AI uses (hours, menus, policies).</li>
+          <li>Use Example Personas to tell a short story about each guest type and their goals.</li>
+          <li>End with Agent Assist: explain real‑time suggestions, summaries, and quality monitoring.</li>
+        </ul>
+      </div>
+      <button id="close-overview">Close</button>
+    </div>
+  </div>
+
+  <div class="ai-overlay" id="ai-overlay" aria-hidden="true">
+    <div class="ai-card" role="dialog" aria-modal="true" aria-labelledby="ai-title">
+      <div class="ai-header">
+        <h2 id="ai-title">AI Agent Configuration (Placeholder)</h2>
+        <button class="ai-close" id="close-ai">Close</button>
+      </div>
+      <div class="ai-carousel">
+        <div class="ai-slide active">
+          <div class="ai-image-wrap">
+            <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAgent1.png" alt="AI agent configuration step 1" />
+          </div>
+          <div class="ai-caption">Placeholder slide 1: AI agent configuration overview.</div>
+        </div>
+        <div class="ai-slide">
+          <div class="ai-image-wrap">
+            <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAgent2.png" alt="AI agent configuration step 2" />
+          </div>
+          <div class="ai-caption">Placeholder slide 2: Knowledge and intent mapping.</div>
+        </div>
+        <div class="ai-slide">
+          <div class="ai-image-wrap">
+            <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAgent3.png" alt="AI agent configuration step 3" />
+          </div>
+          <div class="ai-caption">Placeholder slide 3: Workflow configuration and routing.</div>
+        </div>
+        <div class="ai-slide">
+          <div class="ai-image-wrap">
+            <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAgent4.png" alt="AI agent configuration step 4" />
+          </div>
+          <div class="ai-caption">Placeholder slide 4: Guardrails and compliance settings.</div>
+        </div>
+        <div class="ai-slide">
+          <div class="ai-image-wrap">
+            <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAgent5.png" alt="AI agent configuration step 5" />
+          </div>
+          <div class="ai-caption">Placeholder slide 5: Agent assist prompts and tuning.</div>
+        </div>
+        <div class="ai-slide">
+          <div class="ai-image-wrap">
+            <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAgent6.png" alt="AI agent configuration step 6" />
+          </div>
+          <div class="ai-caption">Placeholder slide 6: Analytics and performance review.</div>
+        </div>
+      </div>
+      <div class="ai-controls">
+        <button id="ai-prev">Previous</button>
+        <div class="ai-dots" id="ai-dots">
+          <span class="active"></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <button id="ai-next">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="interact-overlay" id="interact-overlay" aria-hidden="true">
+    <div class="interact-card" role="dialog" aria-modal="true" aria-labelledby="interact-title">
+      <div class="interact-header">
+        <h2 id="interact-title">Ways to Interact with AI Agent (Placeholder)</h2>
+        <button class="interact-close" id="close-interact">Close</button>
+      </div>
+      <p>Placeholder guidance for the Webex Bank AI Virtual Agent demo. Replace with your final script.</p>
+      <div class="interact-section">
+        <h3>Voice AI Agent</h3>
+        <p>Describe voice entry, natural language intent capture, and routing to the right team with AI summaries.</p>
+        <div class="interact-qr">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Voice%20AI%20Agent%20Demo" alt="Voice AI agent QR code" />
+          <p>Placeholder QR code for the voice AI entry point.</p>
+        </div>
+      </div>
+      <div class="interact-section">
+        <h3>SMS AI Agent</h3>
+        <p>Show how users can text the AI agent for reservations, menu questions, and special requests.</p>
+        <div class="interact-qr">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SMS%20AI%20Agent%20Demo" alt="SMS AI agent QR code" />
+          <p>Placeholder QR code for the SMS AI entry point.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="persona-overlay" id="persona-overlay" aria-hidden="true">
+    <div class="persona-card" role="dialog" aria-modal="true" aria-labelledby="persona-title">
+      <div class="persona-header">
+        <h2 id="persona-title">Example Personas (Placeholder)</h2>
+        <button class="persona-close" id="close-persona">Close</button>
+      </div>
+      <p>Placeholder personas for demo storytelling. Replace with your real customer profiles.</p>
+      <div class="persona-grid">
+        <div class="persona">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt="Casual headshot of Daniel" />
+          <strong>Daniel Rhodes</strong>
+          <ul>
+            <li>Phone: (415) 555-0133</li>
+            <li>Goal: Open a new checking account with direct deposit</li>
+            <li>Needs: Overdraft settings, debit card delivery timing</li>
+          </ul>
+        </div>
+        <div class="persona">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80" alt="Casual headshot of Ava" />
+          <strong>Ava Morales</strong>
+          <ul>
+            <li>Phone: (212) 555-0187</li>
+            <li>Goal: Mortgage pre‑approval for a first home</li>
+            <li>Needs: Rate options, documents checklist, timeline</li>
+          </ul>
+        </div>
+        <div class="persona">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80" alt="Casual headshot of Miguel" />
+          <strong>Miguel Alvarez</strong>
+          <ul>
+            <li>Phone: (310) 555-0145</li>
+            <li>Goal: Business account + merchant services setup</li>
+            <li>Questions: Fees, transaction limits, card controls</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="knowledge-overlay" id="knowledge-overlay" aria-hidden="true">
+    <div class="knowledge-card" role="dialog" aria-modal="true" aria-labelledby="knowledge-title">
+      <div class="knowledge-header">
+        <h2 id="knowledge-title">Knowledge Base Configuration (Placeholder)</h2>
+        <button class="knowledge-close" id="close-knowledge">Close</button>
+      </div>
+      <p>Typical banking details used by the AI agent. Replace with official information.</p>
+      <div class="knowledge-grid">
+        <div class="knowledge-card-item">
+          <h3>Branch Hours</h3>
+          <ul>
+            <li>Monday–Friday: 9:00 AM – 6:00 PM</li>
+            <li>Saturday: 10:00 AM – 2:00 PM</li>
+            <li>Sunday: Closed</li>
+          </ul>
+        </div>
+        <div class="knowledge-card-item">
+          <h3>Accounts & Services</h3>
+          <ul>
+            <li>Checking, savings, and CDs</li>
+            <li>Personal loans and mortgages</li>
+            <li>Business banking and treasury services</li>
+          </ul>
+        </div>
+        <div class="knowledge-card-item">
+          <h3>Appointments</h3>
+          <ul>
+            <li>New account openings</li>
+            <li>Loan and mortgage consultations</li>
+            <li>Wealth management sessions</li>
+          </ul>
+        </div>
+        <div class="knowledge-card-item">
+          <h3>Policies</h3>
+          <ul>
+            <li>Fraud protection and account alerts</li>
+            <li>Identity verification requirements</li>
+            <li>Dispute resolution timelines</li>
+          </ul>
+        </div>
+        <div class="knowledge-card-item">
+          <h3>Locations</h3>
+          <ul>
+            <li>200 Market Street, San Francisco, CA</li>
+            <li>ATM access 24/7</li>
+            <li>On‑site parking and drive‑up ATM</li>
+          </ul>
+        </div>
+        <div class="knowledge-card-item">
+          <h3>Contact & Preferences</h3>
+          <ul>
+            <li>Support phone: (415) 555‑0199</li>
+            <li>Preferred advisor and language</li>
+            <li>Notification preferences (SMS, email)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="knowledge-card-item">
+        <h3>Detailed Service Catalog (Placeholder)</h3>
+        <div class="menu-detail-grid">
+          <div class="menu-section">
+            <h4>Checking</h4>
+            <ul>
+              <li>Everyday Checking: no monthly fee with direct deposit</li>
+              <li>Premium Checking: travel perks and concierge support</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Savings</h4>
+            <ul>
+              <li>High‑Yield Savings: goal tracking and auto‑save rules</li>
+              <li>Certificates of Deposit: 6–36 month terms</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Cards</h4>
+            <ul>
+              <li>Cash Rewards Card: 1.5%–2.0% on all spend</li>
+              <li>Travel Card: lounge access and points transfers</li>
+              <li>Business Card: spend controls and employee cards</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Lending</h4>
+            <ul>
+              <li>Mortgages: fixed and adjustable options</li>
+              <li>Auto Loans: fast approvals and flexible terms</li>
+              <li>Personal Loans: debt consolidation and major purchases</li>
+              <li>Business Lines of Credit: working capital support</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Wealth</h4>
+            <ul>
+              <li>Portfolio management: risk profiling and rebalancing</li>
+              <li>Retirement planning: IRA and employer plans</li>
+              <li>Estate planning: beneficiary and trust guidance</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Business Services</h4>
+            <ul>
+              <li>Merchant services: payments and invoicing</li>
+              <li>Treasury management: cash flow and forecasting</li>
+              <li>Payroll integration and tax documentation</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Security</h4>
+            <ul>
+              <li>Real‑time fraud monitoring and alerts</li>
+              <li>Card controls and spending limits</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Support</h4>
+            <ul>
+              <li>24/7 digital support and secure messaging</li>
+              <li>Concierge callbacks and appointment scheduling</li>
+            </ul>
+          </div>
+          <div class="menu-section">
+            <h4>Compliance</h4>
+            <ul>
+              <li>Regulatory disclosures and audit logs</li>
+              <li>Privacy controls and consent management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="assist-overlay" id="assist-overlay" aria-hidden="true">
+    <div class="assist-card" role="dialog" aria-modal="true" aria-labelledby="assist-title">
+      <div class="assist-header">
+        <h2 id="assist-title">Agent Assist (Placeholder)</h2>
+        <button class="assist-close" id="close-assist">Close</button>
+      </div>
+      <div class="ai-image-wrap">
+        <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/JS_RS_AIAssist1.png" alt="Agent assist configuration" />
+      </div>
+      <div class="ai-caption">Placeholder view of agent assist configuration and live suggestion surfaces.</div>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll(".nav button");
+    const panels = document.querySelectorAll(".instruction-panel");
+    const envButtons = document.querySelectorAll(".env-buttons button");
+    const overviewOverlay = document.getElementById("overview-overlay");
+    const closeOverview = document.getElementById("close-overview");
+    const aiOverlay = document.getElementById("ai-overlay");
+    const closeAi = document.getElementById("close-ai");
+    const interactOverlay = document.getElementById("interact-overlay");
+    const closeInteract = document.getElementById("close-interact");
+    const personaOverlay = document.getElementById("persona-overlay");
+    const closePersona = document.getElementById("close-persona");
+    const knowledgeOverlay = document.getElementById("knowledge-overlay");
+    const closeKnowledge = document.getElementById("close-knowledge");
+    const assistOverlay = document.getElementById("assist-overlay");
+    const closeAssist = document.getElementById("close-assist");
+    const aiSlides = Array.from(document.querySelectorAll(".ai-slide"));
+    const aiDots = Array.from(document.querySelectorAll("#ai-dots span"));
+    let aiIndex = 0;
+
+    envButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.env;
+        if (target) window.location.href = target;
+      });
+    });
+
+    function openAiOverlay() {
+      aiOverlay.classList.add("open");
+      aiOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeAiOverlay() {
+      aiOverlay.classList.remove("open");
+      aiOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function openInteractOverlay() {
+      interactOverlay.classList.add("open");
+      interactOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeInteractOverlay() {
+      interactOverlay.classList.remove("open");
+      interactOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function openPersonaOverlay() {
+      personaOverlay.classList.add("open");
+      personaOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closePersonaOverlay() {
+      personaOverlay.classList.remove("open");
+      personaOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function openKnowledgeOverlay() {
+      knowledgeOverlay.classList.add("open");
+      knowledgeOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeKnowledgeOverlay() {
+      knowledgeOverlay.classList.remove("open");
+      knowledgeOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function openAssistOverlay() {
+      assistOverlay.classList.add("open");
+      assistOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeAssistOverlay() {
+      assistOverlay.classList.remove("open");
+      assistOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function closeAllOverlays() {
+      overviewOverlay.classList.remove("open");
+      overviewOverlay.setAttribute("aria-hidden", "true");
+      closeAiOverlay();
+      closeInteractOverlay();
+      closePersonaOverlay();
+      closeKnowledgeOverlay();
+      closeAssistOverlay();
+    }
+
+    function setAiSlide(index) {
+      aiIndex = (index + aiSlides.length) % aiSlides.length;
+      aiSlides.forEach((slide) => slide.classList.remove("active"));
+      aiDots.forEach((dot) => dot.classList.remove("active"));
+      aiSlides[aiIndex].classList.add("active");
+      aiDots[aiIndex].classList.add("active");
+    }
+
+    document.getElementById("ai-prev").addEventListener("click", () => {
+      setAiSlide(aiIndex - 1);
+    });
+
+    document.getElementById("ai-next").addEventListener("click", () => {
+      setAiSlide(aiIndex + 1);
+    });
+
+    aiDots.forEach((dot, index) => {
+      dot.addEventListener("click", () => setAiSlide(index));
+    });
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        closeAllOverlays();
+        if (button.dataset.target === "intro") {
+          overviewOverlay.classList.add("open");
+          overviewOverlay.setAttribute("aria-hidden", "false");
+          return;
+        }
+        if (button.dataset.target === "contact") {
+          openInteractOverlay();
+          return;
+        }
+        if (button.dataset.target === "ai-config") {
+          openAiOverlay();
+          return;
+        }
+        if (button.dataset.target === "persona") {
+          openPersonaOverlay();
+          return;
+        }
+        if (button.dataset.target === "knowledge") {
+          openKnowledgeOverlay();
+          return;
+        }
+        if (button.dataset.target === "gallery") {
+          openAssistOverlay();
+          return;
+        }
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        panels.forEach((panel) => panel.classList.remove("active"));
+        button.classList.add("active");
+        const target = document.getElementById(button.dataset.target);
+        if (target) target.classList.add("active");
+      });
+    });
+
+    closeOverview.addEventListener("click", () => {
+      overviewOverlay.classList.remove("open");
+      overviewOverlay.setAttribute("aria-hidden", "true");
+    });
+
+    overviewOverlay.addEventListener("click", (event) => {
+      if (event.target === overviewOverlay) {
+        overviewOverlay.classList.remove("open");
+        overviewOverlay.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    closeAi.addEventListener("click", closeAiOverlay);
+
+    aiOverlay.addEventListener("click", (event) => {
+      if (event.target === aiOverlay) {
+        closeAiOverlay();
+      }
+    });
+
+    closeInteract.addEventListener("click", closeInteractOverlay);
+
+    interactOverlay.addEventListener("click", (event) => {
+      if (event.target === interactOverlay) {
+        closeInteractOverlay();
+      }
+    });
+
+    closePersona.addEventListener("click", closePersonaOverlay);
+
+    personaOverlay.addEventListener("click", (event) => {
+      if (event.target === personaOverlay) {
+        closePersonaOverlay();
+      }
+    });
+
+    closeKnowledge.addEventListener("click", closeKnowledgeOverlay);
+
+    knowledgeOverlay.addEventListener("click", (event) => {
+      if (event.target === knowledgeOverlay) {
+        closeKnowledgeOverlay();
+      }
+    });
+
+    closeAssist.addEventListener("click", closeAssistOverlay);
+
+    assistOverlay.addEventListener("click", (event) => {
+      if (event.target === assistOverlay) {
+        closeAssistOverlay();
+      }
+    });
+  </script>
+</body>
+</html>

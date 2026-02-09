@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restaurante Superba — Fine Dining Italian</title>
+  <meta name="description" content="Restaurante Superba — a modern fine dining Italian experience with seasonal menus, curated wine, and a theatrical open kitchen." />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap");
+
+    :root {
+      --ink: #f7f0e7;
+      --coal: #d6c8b8;
+      --cream: #12100e;
+      --gold: #d4a04f;
+      --olive: #a89786;
+      --rose: #c48774;
+      --mist: #1b1713;
+      --accent: #2f6b58;
+      --glass: rgba(18, 16, 14, 0.7);
+      --shadow: 0 34px 80px rgba(0, 0, 0, 0.45);
+      --soft-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top, rgba(212, 160, 79, 0.18), transparent 55%),
+        linear-gradient(135deg, #0d0b09 0%, #15110e 55%, #1a1612 100%);
+      min-height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 60%),
+        radial-gradient(circle at 70% 10%, rgba(212, 160, 79, 0.2), transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow {
+      position: absolute;
+      inset: -20% auto auto -10%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(212, 160, 79, 0.28), transparent 70%);
+      filter: blur(5px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow.alt {
+      inset: 30% -10% auto auto;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(196, 135, 116, 0.22), transparent 70%);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(16, 13, 11, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      color: rgba(247, 240, 231, 0.9);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 6px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus::after {
+      width: 100%;
+    }
+
+    .btn {
+      border: none;
+      background: linear-gradient(120deg, #d4a04f, #a76f2b);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn.featured {
+      padding: 14px 26px;
+      font-size: 0.95rem;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(212, 160, 79, 0.5);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(27, 21, 16, 0.3);
+      filter: brightness(1.05);
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 90px 24px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.6rem, 4vw, 4.2rem);
+      margin: 0 0 20px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0 0 30px;
+      color: var(--coal);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-card {
+      background: rgba(20, 17, 14, 0.72);
+      padding: 18px;
+      border-radius: 24px;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-media {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(27, 21, 16, 0.1);
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-tag {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      background: rgba(10, 8, 6, 0.8);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    section {
+      padding: 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 30px;
+    }
+
+    .section-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin: 0 0 16px;
+    }
+
+    .subtitle {
+      color: var(--olive);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .signature-card {
+      background: rgba(20, 16, 13, 0.86);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--soft-shadow);
+      display: grid;
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .signature-card img {
+      border-radius: 16px;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .signature-card h3 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+    }
+
+    .signature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 40px rgba(20, 16, 12, 0.18);
+    }
+
+    .menu-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .menu-tab {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: rgba(247, 240, 231, 0.9);
+      padding: 11px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .menu-tab.active {
+      background: linear-gradient(120deg, #d4a04f, #a76f2b);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(27, 21, 16, 0.24);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-item {
+      background: rgba(20, 16, 13, 0.86);
+      border-radius: 16px;
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .menu-item span {
+      color: var(--olive);
+    }
+
+    .experience {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .experience-card {
+      background: rgba(20, 16, 13, 0.86);
+      border-radius: 22px;
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .experience-card strong {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.1rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .gallery-item img {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(15, 12, 10, 0.75);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    .carousel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      align-items: center;
+    }
+
+    .carousel-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 280px;
+      box-shadow: var(--shadow);
+    }
+
+    .carousel-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .carousel-frame img.active {
+      display: block;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .carousel-controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .ghost {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(16, 13, 11, 0.7);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .reservation {
+      background: rgba(20, 16, 13, 0.78);
+      border-radius: 28px;
+      padding: 32px;
+      display: grid;
+      gap: 20px;
+      box-shadow: var(--soft-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .reservation form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .reservation input,
+    .reservation select,
+    .reservation textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(12, 10, 9, 0.82);
+      color: var(--ink);
+      font-family: inherit;
+    }
+
+    .reservation input:focus,
+    .reservation select:focus,
+    .reservation textarea:focus {
+      outline: none;
+      border-color: rgba(200, 154, 74, 0.6);
+      box-shadow: 0 0 0 3px rgba(200, 154, 74, 0.15);
+    }
+
+    .contact-status {
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      display: none;
+      background: rgba(212, 160, 79, 0.18);
+      border: 1px solid rgba(212, 160, 79, 0.4);
+      color: var(--ink);
+    }
+
+    .contact-status.show {
+      display: block;
+    }
+
+    .contact-status.error {
+      background: rgba(196, 135, 116, 0.2);
+      border-color: rgba(196, 135, 116, 0.45);
+    }
+
+    .footer {
+      padding: 40px 24px 60px;
+      text-align: center;
+      color: rgba(214, 200, 184, 0.8);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 10, 6, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 30;
+      padding: 24px;
+    }
+
+    .modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal img {
+      max-width: 960px;
+      width: 100%;
+      border-radius: 24px;
+    }
+
+    .contact-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 6, 5, 0.65);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 40;
+    }
+
+    .contact-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .contact-popover {
+      position: fixed;
+      top: 86px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      width: min(860px, 92vw);
+      background: rgba(18, 15, 13, 0.96);
+      border-radius: 26px;
+      box-shadow: 0 40px 90px rgba(20, 16, 12, 0.2);
+      padding: 28px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 45;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .contact-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-header h3 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.6rem;
+    }
+
+    .close-btn {
+      border: none;
+      background: transparent;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .contact-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .contact-tab {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(15, 12, 10, 0.7);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+
+    .contact-tab.active {
+      background: linear-gradient(120deg, #d4a04f, #a76f2b);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 12px 26px rgba(20, 16, 12, 0.2);
+    }
+
+    .contact-content {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      background: linear-gradient(160deg, rgba(20, 16, 13, 0.95), rgba(12, 10, 9, 0.9));
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-panel {
+      display: none;
+      gap: 12px;
+    }
+
+    .contact-panel.active {
+      display: grid;
+    }
+
+    .contact-panel strong {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-panel form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-panel input,
+    .contact-panel select,
+    .contact-panel textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(12, 10, 9, 0.82);
+      color: var(--ink);
+      font-family: inherit;
+    }
+
+    .contact-panel input:focus,
+    .contact-panel select:focus,
+    .contact-panel textarea:focus {
+      outline: none;
+      border-color: rgba(200, 154, 74, 0.6);
+      box-shadow: 0 0 0 3px rgba(200, 154, 74, 0.15);
+    }
+
+    .contact-panel .btn {
+      width: 100%;
+      justify-self: stretch;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(1.02); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hero { padding-top: 60px; }
+      .carousel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="glow"></div>
+    <div class="glow alt"></div>
+
+    <header>
+      <nav class="nav">
+        <div class="logo">Restaurante Superba</div>
+        <div class="nav-links">
+          <a href="#story">Story</a>
+          <a href="#menu">Menu</a>
+          <a href="#gallery">Gallery</a>
+        </div>
+        <button class="btn featured" id="open-contact">Contact Concierge</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="subtitle">Fine dining italian</div>
+          <h1>Where coastal Italy meets modern craft.</h1>
+          <p>Restaurante Superba is a 24-seat tasting room with a theatrical open kitchen, curated wine cellar, and a nightly chef’s narrative built around seasonal heirloom ingredients.</p>
+          <div class="hero-actions">
+            <button class="btn" id="journey">Start the Journey</button>
+            <div class="hero-card">
+              <strong>Tonight’s Seating</strong>
+              <div>6:00 PM · 8:45 PM</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80" alt="Chef plating a fine dining dish" />
+          <div class="hero-tag">Open Kitchen · 14 Courses</div>
+        </div>
+      </section>
+
+      <section id="story">
+        <div class="section-inner">
+          <div>
+            <div class="subtitle">Signature moments</div>
+            <h2 class="section-title">A tasting journey rooted in Italian terroir.</h2>
+            <p>Each course is inspired by a region of Italy, finished with seasonal California produce and paired with low-intervention vintages from our cellar vault.</p>
+          </div>
+          <div class="signature-grid">
+            <article class="signature-card">
+              <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80" alt="Handmade pasta with herbs" />
+              <h3>Liguria — Verde</h3>
+              <p>Hand-cut trofie, basil emulsion, candied pine nut.</p>
+            </article>
+            <article class="signature-card">
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" alt="Plated seafood dish" />
+              <h3>Amalfi — Mare</h3>
+              <p>Charred prawns, lemon ash, saffron beurre blanc.</p>
+            </article>
+            <article class="signature-card">
+              <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=800&q=80" alt="Dessert with gold dust" />
+              <h3>Toscana — Dolce</h3>
+              <p>Olive oil semifreddo, fig leaf, gold dust.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="menu">
+        <div class="section-inner">
+          <div>
+            <div class="subtitle">Chef’s menu</div>
+            <h2 class="section-title">Select the mood. We’ll curate the rest.</h2>
+          </div>
+          <div class="menu-tabs" role="tablist">
+            <button class="menu-tab active" data-filter="seasonal">Seasonal Tasting</button>
+            <button class="menu-tab" data-filter="vegetarian">Vegetarian</button>
+            <button class="menu-tab" data-filter="wine">Wine Pairing</button>
+          </div>
+          <div class="menu-grid" id="menu-grid">
+            <article class="menu-item" data-category="seasonal">
+              <strong>Primavera Ritual</strong>
+              <span>8 courses · 120</span>
+              <p>Fresh herbs, green asparagus, Amalfi citrus.</p>
+            </article>
+            <article class="menu-item" data-category="seasonal">
+              <strong>Mare Notturno</strong>
+              <span>10 courses · 150</span>
+              <p>Line-caught seafood, charcoal, preserved lemon.</p>
+            </article>
+            <article class="menu-item" data-category="vegetarian">
+              <strong>Giardino Lento</strong>
+              <span>7 courses · 110</span>
+              <p>Market vegetables, heirloom grains, aged balsamic.</p>
+            </article>
+            <article class="menu-item" data-category="vegetarian">
+              <strong>Terra Viva</strong>
+              <span>9 courses · 130</span>
+              <p>Forest mushrooms, truffle, wild fennel.</p>
+            </article>
+            <article class="menu-item" data-category="wine">
+              <strong>Cellar Flight</strong>
+              <span>5 pairings · 85</span>
+              <p>Small-production Barolo, Etna Rosato, Vermentino.</p>
+            </article>
+            <article class="menu-item" data-category="wine">
+              <strong>Archive Reserve</strong>
+              <span>7 pairings · 140</span>
+              <p>Library vintages, rare dessert pours, sommelier notes.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-inner experience">
+          <div>
+            <div class="subtitle">The experience</div>
+            <h2 class="section-title">Intimate, theatrical, unforgettable.</h2>
+            <p>We seat once per evening. Conversations with the chef, a private vinyl soundtrack, and a curated wine narrative are part of every reservation.</p>
+          </div>
+          <div class="experience-card">
+            <strong>Open Kitchen</strong>
+            <p>Watch each course assembled with lighting that shifts with the story.</p>
+          </div>
+          <div class="experience-card">
+            <strong>Sommelier Atelier</strong>
+            <p>Custom pairings designed around heritage Italian producers.</p>
+          </div>
+          <div class="experience-card">
+            <strong>Private Salon</strong>
+            <p>Available for gatherings of 6–10 guests with bespoke menus.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery">
+        <div class="section-inner">
+          <div>
+            <div class="subtitle">Gallery</div>
+            <h2 class="section-title">A glimpse of the Superba night.</h2>
+          </div>
+          <div class="gallery">
+            <div class="gallery-item" data-full="https://images.unsplash.com/photo-1481931715705-36f40bf1c0c2?auto=format&fit=crop&w=1400&q=80">
+              <img src="https://images.unsplash.com/photo-1481931715705-36f40bf1c0c2?auto=format&fit=crop&w=800&q=80" alt="Dining room lighting" />
+              <span class="gallery-label">Salon</span>
+            </div>
+            <div class="gallery-item" data-full="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1400&q=80">
+              <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=80" alt="Pasta dish" />
+              <span class="gallery-label">Pasta</span>
+            </div>
+            <div class="gallery-item" data-full="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80">
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80" alt="Wine glasses" />
+              <span class="gallery-label">Cellar</span>
+            </div>
+            <div class="gallery-item" data-full="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80">
+              <img src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80" alt="Chef preparing dish" />
+              <span class="gallery-label">Chef</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-inner carousel">
+          <div>
+            <div class="subtitle">Wine cellar</div>
+            <h2 class="section-title">A rotating collection of Italian icons.</h2>
+            <p>Browse the cellar highlights. Each bottle is selected for a single story, never repeated.</p>
+            <div class="carousel-controls">
+              <button class="ghost" id="prev-slide">Previous</button>
+              <button class="ghost" id="next-slide">Next</button>
+            </div>
+          </div>
+          <div class="carousel-frame">
+            <img class="active" src="https://images.unsplash.com/photo-1454944338482-a69bb95894af?auto=format&fit=crop&w=1200&q=80" alt="Wine bottles" />
+            <img src="https://images.unsplash.com/photo-1527169402691-feff5539e52c?auto=format&fit=crop&w=1200&q=80" alt="Sommelier pouring wine" />
+            <img src="https://images.unsplash.com/photo-1502303756762-a03b1a5a77fa?auto=format&fit=crop&w=1200&q=80" alt="Closeup of red wine" />
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-inner">
+          <div>
+            <div class="subtitle">Contact</div>
+            <h2 class="section-title">Reach our concierge for immediate service.</h2>
+            <p>Tap to call, send a quick SMS, or schedule a callback with our team.</p>
+            <div class="hero-actions" style="margin-top: 20px;">
+              <button class="btn" id="open-contact-secondary">Contact Options</button>
+            </div>
+          </div>
+          <div class="reservation">
+            <p style="margin: 0;">We respond within minutes. Tap the contact button above to call, text, or schedule a callback.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  <!--  Paste in IMI Webschat code below this comment -->
+     <div id="divicw" data-bind="84266D9A-505C-47EB-BD4B-5339E8EE1587" data-org=""></div><script>var i={t:function(t){var e="https://media.imi.chat/widget/js/imichatinit.js";try{var o=new XMLHttpRequest;o.onreadystatechange=function(){if(this.readyState==4){var t=document.getElementById("divicw");if(this.status==0){i.o(t);return}var e=document.createElement("script");e.innerHTML=this.responseText;t.parentNode.insertBefore(e,t.nextSibling)}};o.open("GET",e,true);o.send()}catch(s){console.error(s)}},o:function(t){t.insertAdjacentHTML("afterend",'<iframe id="tls_al_frm" frameborder="0" style="overflow: hidden;height: 208px;width: 394px;position: fixed;display: block;right: 48px;bottom: 12px;z-index: 99999; display:none;"></iframe>');var e=document.getElementById("tls_al_frm");var o=e.contentWindow||(e.contentDocument.document||e.contentDocument);o.document.open();o.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Untitled Document</title><style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;color: #99a0b0;font-size: 14px;}.popover__content{background-color: #fbfbfe; padding: 1.5rem; border-radius: 5px; width: 300px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);position: relative;}.popover__message{font-weight: 600;color:#56627c;font-size: 16px;}.pull-left{float:left;}.clearfix{clear: both;}.hdr-txt{width: 218px; margin-top: 3px;}.para-txt a{text-decoration: none;color: #005cde;}.close-btn{position: absolute;right:15px;top:15px;}.close-btn a{text-decoration: none;font-weight: 400; color: #56627c; font-size: 16px;}</style></head><body><div class="popover__content"><div class="close-btn"><a href="#" onclick="closeTLSAlert();">X</a></div><div class="popover__message"><div class="pull-left hdr-txt">This browser version is not supported on LiveChat.</div></div><div class="clearfix"></div><p class="para-txt">Please update your browser to the latest version and re-open the website to access the widget. </p></div><script>function closeTLSAlert(){window.parent.postMessage({key: "close_tls_alert",value: "close_tls_alert",action: "close_tls_alert"}, "*");}<\/script></body></html>');o.document.close();e.style.display="block";window.addEventListener("message",function(t){if(t.data.action=="close_tls_alert"){i.s()}})},s:function(){var t=document.getElementById("tls_al_frm");t.remove()}};i.t(function(t){});</script>
+    <footer class="footer">
+      <div>Restaurante Superba · 101 Via Aurelia · (415) 555-0199</div>
+      <div>Open Tuesday — Sunday · Seatings at 6:00 PM and 8:45 PM</div>
+    </footer>
+
+    <div class="modal" id="modal">
+      <img src="" alt="Expanded gallery image" />
+    </div>
+
+    <div class="contact-backdrop" id="contact-backdrop"></div>
+    <div class="contact-popover" id="contact-popover" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <div class="contact-header">
+        <h3 id="contact-title">Contact Restaurante Superba</h3>
+        <button class="close-btn" id="close-contact" aria-label="Close contact options">×</button>
+      </div>
+      <div class="contact-tabs" role="tablist" aria-label="Contact options">
+        <button class="contact-tab active" data-panel="call-panel" role="tab" aria-selected="true">Call</button>
+        <button class="contact-tab" data-panel="sms-panel" role="tab" aria-selected="false">SMS</button>
+        <button class="contact-tab" data-panel="callback-panel" role="tab" aria-selected="false">Callback</button>
+      </div>
+      <div class="contact-status" id="contact-status" role="status" aria-live="polite"></div>
+      <div class="contact-content">
+        <div class="contact-panel active" id="call-panel" role="tabpanel">
+          <strong>Call now -- 4055551234</strong>
+          <div>Immediate assistance from our concierge team.</div>
+          <a class="btn" href="tel:+15165179273">Click to Call</a>
+        </div>
+        <div class="contact-panel" id="sms-panel" role="tabpanel">
+          <strong>Send SMS</strong>
+          <div>We’ll text you back within minutes.</div>
+          <form id="sms-form">
+            <input type="text" name="smsName" placeholder="Full name" required />
+            <input type="tel" name="smsPhone" placeholder="Mobile number" inputmode="numeric" required />
+            <button class="btn" type="submit">Send SMS</button>
+          </form>
+        </div>
+        <div class="contact-panel" id="callback-panel" role="tabpanel">
+          <strong>Schedule callback</strong>
+          <div>Choose a reason and we’ll call you back.</div>
+          <form id="callback-form">
+            <input type="text" name="name" placeholder="Full name" required />
+            <input type="tel" name="phone" placeholder="US phone number" inputmode="numeric" required />
+            <select name="reason" required>
+              <option value="" disabled selected>Reason for calling</option>
+              <option value="Chef tasting experience">Chef tasting experience</option>
+              <option value="Private dining inquiry">Private dining inquiry</option>
+              <option value="Wine pairing consultation">Wine pairing consultation</option>
+              <option value="Gift card request">Gift card request</option>
+            </select>
+            <textarea name="message" rows="3" placeholder="Message for our concierge"></textarea>
+            <button class="btn" type="submit">Schedule Callback</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll(".menu-tab");
+    const menuItems = document.querySelectorAll(".menu-item");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        const filter = tab.dataset.filter;
+        menuItems.forEach((item) => {
+          item.style.display = item.dataset.category === filter ? "grid" : "none";
+        });
+      });
+    });
+
+    const slides = document.querySelectorAll(".carousel-frame img");
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide) => slide.classList.remove("active"));
+      slides[index].classList.add("active");
+    }
+
+    document.getElementById("prev-slide").addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    document.getElementById("next-slide").addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    const modal = document.getElementById("modal");
+    const modalImage = modal.querySelector("img");
+
+    galleryItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        modalImage.src = item.dataset.full;
+        modal.classList.add("open");
+      });
+    });
+
+    modal.addEventListener("click", () => {
+      modal.classList.remove("open");
+    });
+
+    const callbackForm = document.getElementById("callback-form");
+    const smsForm = document.getElementById("sms-form");
+    const statusBox = document.getElementById("contact-status");
+    const contactPopover = document.getElementById("contact-popover");
+    const contactBackdrop = document.getElementById("contact-backdrop");
+    const contactTabs = document.querySelectorAll(".contact-tab");
+    const contactPanels = document.querySelectorAll(".contact-panel");
+
+    function openContact() {
+      clearStatus();
+      contactPopover.classList.add("open");
+      contactBackdrop.classList.add("open");
+    }
+
+    function closeContact() {
+      contactPopover.classList.remove("open");
+      contactBackdrop.classList.remove("open");
+    }
+
+    function showStatus(message, isError = false) {
+      statusBox.textContent = message;
+      statusBox.classList.toggle("error", isError);
+      statusBox.classList.add("show");
+    }
+
+    function clearStatus() {
+      statusBox.textContent = "";
+      statusBox.classList.remove("error", "show");
+    }
+
+    document.getElementById("open-contact").addEventListener("click", openContact);
+    document.getElementById("open-contact-secondary").addEventListener("click", openContact);
+    document.getElementById("close-contact").addEventListener("click", closeContact);
+    contactBackdrop.addEventListener("click", closeContact);
+
+    contactTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        clearStatus();
+        contactTabs.forEach((t) => {
+          t.classList.remove("active");
+          t.setAttribute("aria-selected", "false");
+        });
+        contactPanels.forEach((panel) => panel.classList.remove("active"));
+
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        const target = document.getElementById(tab.dataset.panel);
+        if (target) target.classList.add("active");
+      });
+    });
+
+    callbackForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(callbackForm);
+      const nameInput = String(formData.get("name") || "").trim();
+      const reasonInput = String(formData.get("reason") || "").trim();
+      const rawPhone = String(formData.get("phone") || "");
+      let phoneDigits = rawPhone.replace(/\\D/g, "");
+      if (phoneDigits.length === 11 && phoneDigits.startsWith("1")) {
+        phoneDigits = phoneDigits.slice(1);
+      }
+      if (phoneDigits.length !== 10) {
+        showStatus("Please enter a valid US phone number.", true);
+        return;
+      }
+
+      const payload = {
+        name: nameInput,
+        department: "Demo",
+        reason: reasonInput,
+        number: phoneDigits,
+        delay: "0",
+        message: String(formData.get("message") || "").trim()
+      };
+
+      try {
+        await fetch("https://hooks.us.webexconnect.io/events/QSNEQYO899", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        showStatus("Callback request sent. We’ll be in touch shortly.");
+        callbackForm.reset();
+        closeContact();
+      } catch (error) {
+        showStatus("We couldn't send the request. Please call us instead.", true);
+      }
+    });
+
+    smsForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(smsForm);
+      const nameInput = String(formData.get("smsName") || "").trim();
+      const rawPhone = String(formData.get("smsPhone") || "");
+      let phoneDigits = rawPhone.replace(/\\D/g, "");
+      if (phoneDigits.length === 11 && phoneDigits.startsWith("1")) {
+        phoneDigits = phoneDigits.slice(1);
+      }
+
+      if (phoneDigits.length !== 10) {
+        showStatus("Please enter a valid US mobile number.", true);
+        return;
+      }
+
+      const payload = {
+        name: nameInput,
+        number: phoneDigits
+      };
+
+      try {
+        await fetch("https://hooks.us.webexconnect.io/events/7N19HJZ3J8", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        showStatus("SMS request sent. We’ll text you shortly.");
+        smsForm.reset();
+      } catch (error) {
+        showStatus("We couldn't send the SMS. Please call us instead.", true);
+      }
+    });
+
+    document.getElementById("journey").addEventListener("click", () => {
+      document.getElementById("menu").scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+
+  
+
+</body>
+</html>
