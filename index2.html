@@ -423,8 +423,8 @@
     }
 
     .persona-card {
-      width: min(1100px, 94vw);
-      max-height: 90vh;
+      width: min(760px, 92vw);
+      max-height: 72vh;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
       border: 1px solid rgba(12, 62, 98, 0.18);
@@ -461,7 +461,7 @@
     .persona-grid {
       display: grid;
       gap: 16px;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: 1fr;
     }
 
     .persona {
@@ -474,12 +474,12 @@
     }
 
     .persona img {
-      width: 100%;
-      height: 150px;
+      width: 120px;
+      height: auto;
       object-fit: contain;
       border-radius: 12px;
       border: 1px solid rgba(12, 62, 98, 0.12);
-      background: #2b2f3a;
+      justify-self: start;
     }
 
     .persona strong {
@@ -851,7 +851,7 @@
       <div class="side-content">
         <nav class="nav" aria-label="Demo navigation">
           <button class="active" data-target="intro">Overview</button>
-          <button data-target="persona">Example Personas</button>
+          <button data-target="persona">Example Persona</button>
           <button data-target="contact">Ways to Interact with AI Agent</button>
           <button data-target="ai-config">AI Agent Configuration</button>
           <button data-target="knowledge">Knowledge Base Configuration</button>
@@ -871,7 +871,7 @@
             <p>Open the AI configuration modal to walk through the six configuration visuals and talk through each step.</p>
           </div>
           <div class="instruction-panel" id="persona">
-            <h2>Example Personas</h2>
+            <h2>Example Persona</h2>
             <p>Open the persona modal to showcase example guests and their interaction goals.</p>
           </div>
           <div class="instruction-panel" id="knowledge">
@@ -1014,20 +1014,11 @@
   <div class="persona-overlay" id="persona-overlay" aria-hidden="true">
     <div class="persona-card" role="dialog" aria-modal="true" aria-labelledby="persona-title">
       <div class="persona-header">
-        <h2 id="persona-title">Example Personas (Placeholder)</h2>
+        <h2 id="persona-title">Example Persona (Placeholder)</h2>
         <button class="persona-close" id="close-persona">Close</button>
       </div>
       <p>Placeholder personas for demo storytelling. Replace with your real customer profiles.</p>
       <div class="persona-grid">
-        <div class="persona">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt="Casual headshot of Daniel" />
-          <strong>Daniel Rhodes</strong>
-          <ul>
-            <li>Phone: (415) 555-0133</li>
-            <li>Goal: Open a new checking account with direct deposit</li>
-            <li>Needs: Overdraft settings, debit card delivery timing</li>
-          </ul>
-        </div>
         <div class="persona">
           <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80" alt="Casual headshot of Ava" />
           <strong>Ava Morales</strong>
@@ -1035,15 +1026,6 @@
             <li>Phone: (212) 555-0187</li>
             <li>Goal: Mortgage pre‑approval for a first home</li>
             <li>Needs: Rate options, documents checklist, timeline</li>
-          </ul>
-        </div>
-        <div class="persona">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80" alt="Casual headshot of Miguel" />
-          <strong>Miguel Alvarez</strong>
-          <ul>
-            <li>Phone: (310) 555-0145</li>
-            <li>Goal: Business account + merchant services setup</li>
-            <li>Questions: Fees, transaction limits, card controls</li>
           </ul>
         </div>
       </div>
