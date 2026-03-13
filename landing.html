@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webex AI Agent Demo Access</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+    :root {
+      --bg: #d3e8f7;
+      --panel: #e9f3ff;
+      --panel-soft: rgba(233, 243, 255, 0.92);
+      --line: rgba(12, 62, 98, 0.18);
+      --text: #0a355a;
+      --muted: rgba(10, 53, 90, 0.64);
+      --accent: #1f7bd1;
+      --accent-2: #2a9bd8;
+      --sidebar-width: 320px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(31, 123, 209, 0.22), transparent 55%),
+        linear-gradient(135deg, #d3e8f7 0%, #cbe3f6 55%, #c3def5 100%);
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: 100vh;
+      height: 100vh;
+    }
+
+    .sidebar {
+      background: linear-gradient(160deg, #f2f7ff 0%, #deebfb 100%);
+      border-right: 1px solid var(--line);
+      padding: 26px 20px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 24px;
+      min-height: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .side-content {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .intro-card,
+    .notes-card {
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .intro-card h2,
+    .notes-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      color: #000;
+    }
+
+    .intro-card p,
+    .notes-card p {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .notes-card ul {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+      padding: 8px 36px 28px;
+      min-height: 0;
+    }
+
+    .topbar {
+      margin-top: 0;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 18px 16px 16px;
+      border-radius: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: none;
+      position: relative;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #000;
+    }
+
+    .topbar p {
+      margin: 0;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .auth-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 0;
+    }
+
+    .auth-card {
+      width: min(560px, 100%);
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(12, 62, 98, 0.18);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(10, 53, 90, 0.25);
+      padding: 32px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .auth-card h2 {
+      margin: 0;
+      font-size: 1.7rem;
+      color: #000;
+    }
+
+    .auth-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .auth-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(12, 62, 98, 0.16);
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .auth-form input:focus {
+      outline: none;
+      border-color: rgba(31, 123, 209, 0.7);
+      box-shadow: 0 0 0 4px rgba(31, 123, 209, 0.12);
+    }
+
+    .auth-form button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      cursor: pointer;
+      box-shadow: 0 14px 28px rgba(10, 53, 90, 0.18);
+    }
+
+    .auth-form button:disabled {
+      opacity: 0.68;
+      cursor: wait;
+    }
+
+    .status {
+      min-height: 1.25em;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .status.error {
+      color: #9f2e2e;
+    }
+
+    .quick-links {
+      display: grid;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(12, 62, 98, 0.12);
+    }
+
+    .quick-links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .help-trigger {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 123, 209, 0.65);
+      background: rgba(31, 123, 209, 0.12);
+      color: #000;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .help-overlay {
+      position: fixed;
+      inset: 0;
+      left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      background: rgba(7, 14, 28, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 200;
+    }
+
+    .help-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .help-card {
+      width: min(420px, 92vw);
+      background: #f7fbff;
+      border: 1px solid rgba(12, 62, 98, 0.2);
+      border-radius: 14px;
+      box-shadow: 0 20px 56px rgba(10, 53, 90, 0.25);
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      color: #0a355a;
+    }
+
+    .help-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #000;
+    }
+
+    .help-card p {
+      margin: 0;
+      line-height: 1.45;
+      color: rgba(10, 53, 90, 0.86);
+    }
+
+    .help-card a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .help-close {
+      justify-self: end;
+      border: 1px solid rgba(31, 123, 209, 0.6);
+      background: rgba(31, 123, 209, 0.12);
+      color: #0a355a;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        grid-template-rows: auto auto;
+      }
+
+      .main {
+        padding: 8px 20px 20px;
+      }
+
+      .help-overlay {
+        left: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="https://storage.googleapis.com/gcp-wxcctoolkit-nprd-41927.appspot.com/assets/o9NSE5Yk1oelB7NAcb6XNg2gWgR2/Webex.png" alt="Webex logo" />
+        WEBEX CONTACT CENTER<br />LIVE INTERACTIVE DEMO
+      </div>
+      <div class="side-content">
+        <div class="intro-card">
+          <h2>Authentication Required</h2>
+          <p>Authenticate once to unlock the restaurant, banking, and healthcare Webex AI Agent demo experiences.</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <h1>Select Your Webex AI Agent Interactive Demo Experience</h1>
+        <p>Sign in once here to access the full demo environment, then continue directly into the requested experience.</p>
+        <button class="help-trigger" id="open-help" type="button" aria-label="Open help">?</button>
+      </div>
+      <div class="auth-wrap">
+        <section class="auth-card">
+          <div>
+            <h2>Enter Demo Credentials</h2>
+            <p>Use the Firebase email and password configured for this click-through environment.</p>
+          </div>
+
+          <form class="auth-form" id="auth-form">
+            <input id="email" name="email" type="email" autocomplete="username" placeholder="Enter email" required />
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required />
+            <button id="submit" type="submit">Access Experience</button>
+          </form>
+
+          <div class="status" id="status" aria-live="polite"></div>
+
+          <div class="quick-links">
+            <a href="index.html">Restaurante Superba Demo</a>
+            <a href="index2.html">Webex Banking Demo</a>
+            <a href="index3.html">Webex Healthcare Demo</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="help-overlay" id="help-overlay" aria-hidden="true">
+    <div class="help-card" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <h3 id="help-title">Need Help?</h3>
+      <p>If you find an issue or need help with this demo, please email or message in Webex:<br />Jerad Cockroft - <a href="mailto:jcockrof@cisco.com"><strong>jcockrof@cisco.com</strong></a><br />or<br />Patrick Cornish - <a href="mailto:pacornis@cisco.com"><strong>pacornis@cisco.com</strong></a>.</p>
+      <button class="help-close" id="close-help" type="button">Close</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+    import { getAnalytics, isSupported as isAnalyticsSupported } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+    import {
+      browserLocalPersistence,
+      getAuth,
+      onAuthStateChanged,
+      setPersistence,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
+    const AUTH_STORAGE_KEY = "webex_ai_clickthrough_demo_authenticated";
+    const firebaseConfig = {
+      apiKey: "AIzaSyCY9fRohl1CM4-ztCVjXYi-OitkNw6PaQ0",
+      authDomain: "gcp-jcockrof-nprd-58910.firebaseapp.com",
+      databaseURL: "https://gcp-jcockrof-nprd-58910-default-rtdb.firebaseio.com",
+      projectId: "gcp-jcockrof-nprd-58910",
+      storageBucket: "gcp-jcockrof-nprd-58910.firebasestorage.app",
+      messagingSenderId: "1053734275367",
+      appId: "1:1053734275367:web:254fb9aacb5c189cf7c102",
+      measurementId: "G-82B8B3M1X9"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const defaultRedirect = "index.html";
+    const requestedRedirect = params.get("redirect") || defaultRedirect;
+    const form = document.getElementById("auth-form");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const statusEl = document.getElementById("status");
+    const submitButton = document.getElementById("submit");
+    const helpOverlay = document.getElementById("help-overlay");
+    const openHelp = document.getElementById("open-help");
+    const closeHelp = document.getElementById("close-help");
+    let authResolved = false;
+
+    const app = initializeApp(firebaseConfig);
+    if (await isAnalyticsSupported()) {
+      getAnalytics(app);
+    }
+    const auth = getAuth(app);
+    await setPersistence(auth, browserLocalPersistence);
+
+    function setStatus(message, isError = false) {
+      statusEl.textContent = message;
+      statusEl.classList.toggle("error", isError);
+    }
+
+    function setAuthMarker() {
+      localStorage.setItem(AUTH_STORAGE_KEY, "true");
+      document.cookie = AUTH_STORAGE_KEY + "=true; path=/; SameSite=Lax";
+    }
+
+    function clearAuthMarker() {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      document.cookie = AUTH_STORAGE_KEY + "=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+    }
+
+    function sanitizeRedirect(target) {
+      if (!target) return defaultRedirect;
+      if (target.includes("://")) return defaultRedirect;
+      if (target.startsWith("//")) return defaultRedirect;
+      if (target.startsWith("/")) return target.slice(1);
+      return target;
+    }
+
+    function continueToRequestedPage() {
+      window.location.replace(sanitizeRedirect(requestedRedirect));
+    }
+
+    function setHelpOpen(isOpen) {
+      helpOverlay.classList.toggle("open", isOpen);
+      helpOverlay.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    }
+
+    openHelp.addEventListener("click", () => setHelpOpen(true));
+    closeHelp.addEventListener("click", () => setHelpOpen(false));
+    helpOverlay.addEventListener("click", (event) => {
+      if (event.target === helpOverlay) {
+        setHelpOpen(false);
+      }
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setHelpOpen(false);
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuthMarker();
+        continueToRequestedPage();
+        return;
+      }
+      authResolved = true;
+      clearAuthMarker();
+      submitButton.disabled = false;
+      setStatus("");
+      emailInput.focus();
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email) {
+        setStatus("Enter the email address to continue.", true);
+        return;
+      }
+
+      if (!password) {
+        setStatus("Enter the password to continue.", true);
+        return;
+      }
+
+      submitButton.disabled = true;
+      setStatus("Signing in...");
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        setStatus("Authentication successful. Loading experience...");
+      } catch (error) {
+        const code = error && typeof error.code === "string" ? error.code : "";
+        const message = code === "auth/invalid-credential"
+          ? "Email/password authentication failed. Verify the configured Firebase user and password."
+          : (error.message || "Unable to authenticate right now.");
+        clearAuthMarker();
+        setStatus(message, true);
+        submitButton.disabled = false;
+      } finally {
+        if (authResolved) {
+          submitButton.disabled = false;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
