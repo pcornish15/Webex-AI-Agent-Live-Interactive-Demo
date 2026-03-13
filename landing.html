@@ -392,6 +392,8 @@
     } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
     const AUTH_STORAGE_KEY = "webex_ai_clickthrough_demo_authenticated";
+    const AUTH_TIMESTAMP_KEY = "webex_ai_clickthrough_demo_authenticated_at";
+    const AUTH_TIMEOUT_MS = 4 * 60 * 60 * 1000;
     const firebaseConfig = {
       apiKey: "AIzaSyCY9fRohl1CM4-ztCVjXYi-OitkNw6PaQ0",
       authDomain: "gcp-jcockrof-nprd-58910.firebaseapp.com",
@@ -429,12 +431,15 @@
     }
 
     function setAuthMarker() {
+      const expiresAt = new Date(Date.now() + AUTH_TIMEOUT_MS).toUTCString();
       localStorage.setItem(AUTH_STORAGE_KEY, "true");
-      document.cookie = AUTH_STORAGE_KEY + "=true; path=/; SameSite=Lax";
+      localStorage.setItem(AUTH_TIMESTAMP_KEY, String(Date.now()));
+      document.cookie = AUTH_STORAGE_KEY + "=true; path=/; expires=" + expiresAt + "; SameSite=Lax";
     }
 
     function clearAuthMarker() {
       localStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem(AUTH_TIMESTAMP_KEY);
       document.cookie = AUTH_STORAGE_KEY + "=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
     }
 

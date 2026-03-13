@@ -6,8 +6,16 @@
   <script>
     (function () {
       const AUTH_STORAGE_KEY = "webex_ai_clickthrough_demo_authenticated";
+      const AUTH_TIMESTAMP_KEY = "webex_ai_clickthrough_demo_authenticated_at";
+      const AUTH_TIMEOUT_MS = 4 * 60 * 60 * 1000;
       const hasCookie = document.cookie.split("; ").includes(AUTH_STORAGE_KEY + "=true");
-      if (localStorage.getItem(AUTH_STORAGE_KEY) === "true" || hasCookie) return;
+      const authTimestamp = Number(localStorage.getItem(AUTH_TIMESTAMP_KEY) || "0");
+      const hasFreshLocalState = localStorage.getItem(AUTH_STORAGE_KEY) === "true"
+        && Number.isFinite(authTimestamp)
+        && (Date.now() - authTimestamp) < AUTH_TIMEOUT_MS;
+      if (hasFreshLocalState || hasCookie) return;
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem(AUTH_TIMESTAMP_KEY);
       const currentPage = window.location.pathname.split("/").pop() || "index3.html";
       const redirectTarget = currentPage + window.location.search + window.location.hash;
       window.location.replace("landing.html?redirect=" + encodeURIComponent(redirectTarget));
