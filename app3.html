@@ -3,6 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    (function () {
+      const AUTH_STORAGE_KEY = "webex_ai_clickthrough_demo_authenticated";
+      const hasCookie = document.cookie.split("; ").includes(AUTH_STORAGE_KEY + "=true");
+      if (localStorage.getItem(AUTH_STORAGE_KEY) === "true" || hasCookie) return;
+      const currentPage = window.location.pathname.split("/").pop() || "app3.html";
+      const redirectTarget = currentPage + window.location.search + window.location.hash;
+      window.location.replace("landing.html?redirect=" + encodeURIComponent(redirectTarget));
+    })();
+  </script>
   <title>Webex Healthcare — Clinical Care Network</title>
   <meta name="description" content="Webex Healthcare — a modern clinical care network with virtual visits, coordinated services, and AI-assisted patient support." />
   <style>
