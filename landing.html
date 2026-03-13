@@ -505,7 +505,7 @@
       } catch (error) {
         const code = error && typeof error.code === "string" ? error.code : "";
         const message = code === "auth/invalid-credential"
-          ? "Email/password authentication failed. Verify the configured Firebase user and password."
+          ? "Incorrect Useraname/Password. Please try again."
           : (error.message || "Unable to authenticate right now.");
         clearAuthMarker();
         setStatus(message, true);
